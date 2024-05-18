@@ -1,6 +1,7 @@
 import './App.css';
-
+import "milligram";
 import {useState} from "react";
+
 
 function App() {
   const [email, setEmail] = useState("");
@@ -16,7 +17,7 @@ function App() {
   }
 
   return (
-      <div>
+      <div class="app-wrapper">
           <h1>System do zapisów na zajęcia</h1>
           {
             isLogged && 
