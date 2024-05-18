@@ -4,21 +4,37 @@ import {useState} from "react";
 
 function App() {
   const [email, setEmail] = useState("");
+  const [isLogged, setIsLogged] = useState(false);
 
   function handleChange(event) {
       setEmail(event.target.value);
   }
 
+  function login() {
+    alert(`You are logged in as ${email}.`);
+    setIsLogged(true);
+  }
+
   return (
       <div>
           <h1>System do zapisów na zajęcia</h1>
-          <h2>Twój e-mail to {email}.</h2>
-
-          {(email.length > 0 && email.length <= 5) && <p>Twój e-mail jest bardzo krótki.</p>}
-          {(email.length > 5 && email.length <= 20) && <p>Twój e-mail jest ok.</p>}
-          {(email.length > 20) && <p>Twój e-mail jest za długi.</p>}
-
-          <input type="text" value={email} onChange={handleChange}/>
+          {
+            isLogged && 
+              <>
+                <h2>Witaj {email} !</h2> 
+                <button onClick={() => setIsLogged(false)}>Wyloguj się</button>
+              </>
+          }
+          {
+            !isLogged && 
+            <>
+              <label>Podaj e-mail, aby się zalogować </label>
+              <input type="text" value={email} onChange={handleChange}/>
+              <button onClick={() => login()}>Zaloguj się</button>
+              {email && ((email.includes('@')) ? <p>Twój e-mail jest poprawny</p> : <p>Twój e-mail jest niepoprawny</p>)}
+            </>
+          }
+        
       </div>
   );
 }
