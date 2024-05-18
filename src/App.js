@@ -1,40 +1,28 @@
 import './App.css';
 import "milligram";
 import {useState} from "react";
-
+import LoginForm from "./LoginForm";
+import UserPanel from "./UserPanel";
 
 function App() {
-  const [email, setEmail] = useState("");
-  const [isLogged, setIsLogged] = useState(false);
-
-  function handleChange(event) {
-      setEmail(event.target.value);
-  }
+  const [loggedIn, setLoggedIn] = useState(false);
 
   function login() {
-    alert(`You are logged in as ${email}.`);
-    setIsLogged(true);
+    setLoggedIn(true);
+  }
+
+  function logout() {
+    setLoggedIn(false);
   }
 
   return (
       <div class="app-wrapper">
           <h1>System do zapisów na zajęcia</h1>
-          {
-            isLogged && 
-              <>
-                <h2>Witaj {email} !</h2> 
-                <button onClick={() => setIsLogged(false)}>Wyloguj się</button>
-              </>
-          }
-          {
-            !isLogged && 
-            <>
-              <label>Podaj e-mail, aby się zalogować </label>
-              <input type="text" value={email} onChange={handleChange}/>
-              <button onClick={() => login()}>Zaloguj się</button>
-              {email && ((email.includes('@')) ? <p>Twój e-mail jest poprawny</p> : <p>Twój e-mail jest niepoprawny</p>)}
-            </>
-          }
+           {
+              loggedIn
+                ? <UserPanel username={loggedIn} onLogout={logout}/>
+                : <LoginForm onLogin={login} buttonLabel="Zaloguj się" />
+           }
         
       </div>
   );
